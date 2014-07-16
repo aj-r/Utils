@@ -4,10 +4,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace Utils.ObjectModel
 {
-    public abstract class ObservableKeyedCollection<TKey, TItem> : KeyedCollection<TKey, TItem>, INotifyCollectionChanged, INotifyPropertyChanged
+    public abstract class ObservableKeyedCollection<TKey, TItem> : KeyedCollection<TKey, TItem>, INotifyCollectionChanged, INotifyPropertyChanged, IXmlSerializable
     {
         public ObservableKeyedCollection()
         { }
@@ -33,7 +36,7 @@ namespace Utils.ObjectModel
             base.InsertItem(index, item);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
         }
-
+        
         public void AddRange(IEnumerable<TItem> items)
         {
             if (items == null)
@@ -132,6 +135,41 @@ namespace Utils.ObjectModel
 
         [field: NonSerialized]
         public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        #endregion
+
+        #region IXmlSerializable Members
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            reader.ReadStartElement();
+            if (reader.IsEmptyElement)
+                return;
+            var ser = new XmlSerializer(typeof(TItem));
+            var nodeType = reader.MoveToContent();
+            while(nodeType != XmlNodeType.EndElement)
+            {
+                var item = (TItem)ser.Deserialize(reader);
+                Add(item);
+                nodeType = reader.MoveToContent();
+            }
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            var ser = new XmlSerializer(typeof(TItem));
+            foreach (var kvp in Dictionary)
+            {
+                ser.Serialize(writer, kvp.Value);
+            }
+        }
 
         #endregion
     }

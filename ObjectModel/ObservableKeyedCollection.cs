@@ -23,6 +23,18 @@ namespace Utils.ObjectModel
             : base(comparer, dictionaryCreationThreshold)
         { }
 
+        public ObservableKeyedCollection(IEnumerable<TItem> items)
+        {
+            if (items == null)
+                return;
+            int index = 0;
+            foreach (var item in items)
+            {
+                base.InsertItem(index, item);
+                index++;
+            }
+        }
+
         private bool deferNotify = false;
 
         protected override void SetItem(int index, TItem item)
@@ -54,7 +66,7 @@ namespace Utils.ObjectModel
             // UIElement doesn't support changing multiple items at once, so use the reset action.
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
-
+        
         public void RemoveRange(IEnumerable<TKey> keys)
         {
             if (keys == null)

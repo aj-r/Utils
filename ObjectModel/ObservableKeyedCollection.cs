@@ -165,9 +165,13 @@ namespace Utils.ObjectModel
                 return;
             var ser = new XmlSerializer(typeof(TItem));
             var nodeType = reader.MoveToContent();
-            while(nodeType != XmlNodeType.EndElement)
+            if (nodeType == XmlNodeType.None)
+                return;
+            while (nodeType != XmlNodeType.EndElement)
             {
                 var item = (TItem)ser.Deserialize(reader);
+                if (item == null)
+                    continue;
                 Add(item);
                 nodeType = reader.MoveToContent();
             }
@@ -177,9 +181,9 @@ namespace Utils.ObjectModel
         public void WriteXml(XmlWriter writer)
         {
             var ser = new XmlSerializer(typeof(TItem));
-            foreach (var kvp in Dictionary)
+            foreach (TItem item in this)
             {
-                ser.Serialize(writer, kvp.Value);
+                ser.Serialize(writer, item);
             }
         }
 

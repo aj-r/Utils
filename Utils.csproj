@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Logging\EnvironmentFolderConverter.cs" />

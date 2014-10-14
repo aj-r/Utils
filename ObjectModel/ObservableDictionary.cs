@@ -192,7 +192,7 @@ namespace Utils.ObjectModel
                     Dictionary.Add(item.Key, item.Value);
                 }
             }
-            var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items.ToArray());
+            var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items.ToList());
             OnCollectionChanged(e);
         }
 

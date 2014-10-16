@@ -16,16 +16,12 @@ namespace Utils.Tasks
         /// <param name="millisecondsDelay">The maximum number of millisends to wait for.</param>
         /// <param name="cts">A <see cref="System.Threading.CancellationTokenSource"/> that can be used to cancel the task.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        /// <exception cref="System.TimeoutException" />
-        public static async Task Timeout(this Task task, int millisecondsDelay, CancellationTokenSource cts = null)
+        public static async Task WithTimeout(this Task task, int millisecondsDelay)
         {
-            if (cts == null)
-                cts = new CancellationTokenSource();
-            var resultTask = await Task.WhenAny(task, Task.Delay(millisecondsDelay, cts.Token)).ConfigureAwait(false);
-            cts.Cancel();
-            if (resultTask != task)
-                throw new TimeoutException();
-            await task;
+            using (var cts = new CancellationTokenSource(millisecondsDelay))
+            {
+                await task.WithCancellation(cts.Token);
+            }
         }
 
         /// <summary>
@@ -36,29 +32,11 @@ namespace Utils.Tasks
         /// <param name="millisecondsDelay">The maximum number of millisends to wait for.</param>
         /// <param name="cts">A <see cref="System.Threading.CancellationTokenSource"/> that can be used to cancel the task.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        /// <exception cref="System.TimeoutException" />
-        public static async Task<T> Timeout<T>(this Task<T> task, int millisecondsDelay, CancellationTokenSource cts = null)
+        public static async Task<T> WithTimeout<T>(this Task<T> task, int millisecondsDelay)
         {
-            bool createdCts = false;
-            if (cts == null)
+            using (var cts = new CancellationTokenSource(millisecondsDelay))
             {
-                cts = new CancellationTokenSource();
-                createdCts = true;
-            }
-            try
-            {
-                var resultTask = await Task.WhenAny(task, Task.Delay(millisecondsDelay, cts.Token)).ConfigureAwait(false);
-                if (resultTask != task)
-                    throw new TimeoutException();
-                return await task;
-            }
-            finally
-            {
-                // Cancel the original task or the delay task - whichever one did not finish
-                cts.Cancel();
-                // Dispose the CancellationTokenSource if this method created it.
-                if (createdCts)
-                    cts.Dispose();
+                return await task.WithCancellation(cts.Token);
             }
         }
 

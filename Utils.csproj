@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConvertBytes.cs" />
     <Compile Include="DirectoryHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Logging\EnvironmentFolderConverter.cs" />
+    <Compile Include="ObjectModel\LinkedListExtensions.cs" />
+    <Compile Include="ObjectModel\TreeNode.cs" />
     <Compile Include="ObjectModel\NotifyPropertyChangedBase.cs" />
     <Compile Include="ObjectModel\ObservableDictionary.cs" />
     <Compile Include="ObjectModel\ObservableKeyedCollection.cs" />

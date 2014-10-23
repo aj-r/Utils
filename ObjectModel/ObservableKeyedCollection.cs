@@ -152,12 +152,12 @@ namespace Utils.ObjectModel
 
         #region IXmlSerializable Members
 
-        public XmlSchema GetSchema()
+        XmlSchema IXmlSerializable.GetSchema()
         {
             return null;
         }
 
-        public void ReadXml(XmlReader reader)
+        void IXmlSerializable.ReadXml(XmlReader reader)
         {
             reader.MoveToContent();
             reader.ReadStartElement();
@@ -178,7 +178,7 @@ namespace Utils.ObjectModel
             reader.ReadEndElement();
         }
 
-        public void WriteXml(XmlWriter writer)
+        void IXmlSerializable.WriteXml(XmlWriter writer)
         {
             var ser = new XmlSerializer(typeof(TItem));
             foreach (TItem item in this)

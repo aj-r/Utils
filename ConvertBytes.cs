@@ -10,6 +10,8 @@ namespace Utils
     {
         public static byte[] FromHexString(string s)
         {
+            if (s.Length % 2 == 1)
+                throw new FormatException("Invalid length for a hex string.");
             byte[] bytes = new byte[s.Length / 2];
             for (int i = 0; i < s.Length; i += 2)
                 bytes[i / 2] = Convert.ToByte(s.Substring(i, 2), 16);

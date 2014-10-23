@@ -15,6 +15,7 @@ namespace Utils.ObjectModel
         public TreeNode(T data)
         {
             Value = data;
+            Children = new LinkedList<TreeNode<T>>();
         }
 
         /// <summary>
@@ -25,6 +26,6 @@ namespace Utils.ObjectModel
         /// <summary>
         /// Gets or sets the children of the current node.
         /// </summary>
-        public LinkedList<TreeNode<T>> Children { get; set; }
+        public LinkedList<TreeNode<T>> Children { get; private set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Utils
         }
 
         /// <summary>
-        /// Gets a hash code for the specified bytes using the FNV algorithmpublic
+        /// Gets a hash code for the specified byte array using the FNV algorithm.
         /// </summary>
         /// <param name="b">A byte array.</param>
         /// <returns>The combined hash code.</returns>

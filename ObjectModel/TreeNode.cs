@@ -27,5 +27,17 @@ namespace Utils.ObjectModel
         /// Gets or sets the children of the current node.
         /// </summary>
         public LinkedList<TreeNode<T>> Children { get; private set; }
+
+        /// <summary>
+        /// Gets the flattened tree in depth-first order.
+        /// </summary>
+        /// <returns>The list of the values of all tree notes starting with the current node.</returns>
+        public IEnumerable<T> Flatten()
+        {
+            yield return Value;
+            foreach (var child in Children)
+                foreach (var item in child.Flatten())
+                    yield return item;
+        }
     }
 }

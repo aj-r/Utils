@@ -27,9 +27,7 @@ namespace Utils.Tests
         {
             var dic = new ObservableDictionary<int, int>();
             dic.Add(3, 1);
-            Assert.AreEqual(1, dic[3]);
             dic.Add(3, 80);
-            Assert.AreEqual(80, dic[5]);
         }
 
         [Test]
@@ -140,6 +138,10 @@ namespace Utils.Tests
             collectionChangedCount = 0;
             dic.Remove(3);
             Assert.AreEqual(1, collectionChangedCount);
+
+            collectionChangedCount = 0;
+            dic.Remove(3);
+            Assert.AreEqual(0, collectionChangedCount);
         }
 
         [Test]

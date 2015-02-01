@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Utils.Linq
 {
-    public static class Enumerable
+    public static class UtilsEnumerable
     {
         /// <summary>
         /// Determines whether the number of elements in a sequence is equal to a certain value.

@@ -13,6 +13,9 @@ namespace Utils.ObjectModel
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class TransactableCollection<T> : ObservableCollection<T>
     {
+        private int transactionCount = 0;
+        private List<CollectionChange<T>> changes = new List<CollectionChange<T>>();
+
         public TransactableCollection() { }
         public TransactableCollection(IEnumerable<T> collection) : base(collection) { }
         public TransactableCollection(List<T> list) : base(list) { }
@@ -22,7 +25,7 @@ namespace Utils.ObjectModel
         /// <summary>
         /// Gets whether a transaction is currently in progress.
         /// </summary>
-        public bool TransactionInProgress { get; private set; }
+        public bool TransactionInProgress { get { return transactionCount > 0; } }
 
         /// <summary>
         /// Begins a transaction. CollectionChanged events will be suppressed until the transaction is complete.
@@ -32,8 +35,11 @@ namespace Utils.ObjectModel
         /// The return value implements IDisposable. As such, the general usage of this function is in the definition of a using block.
         /// If you call the method in this way, then you should never call EndTransaction(); it will be called automatically when the
         /// transaction is disposed.
+        /// 
+        /// Nested transactions are allowed. If you use nested transactions, the CollectionChanged event will not be raised until the
+        /// outermost transaction completes.
         /// </remarks>
-        public Transaction BeginTransaction()
+        public IDisposable BeginTransaction()
         {
             return new Transaction(this);
         }
@@ -45,8 +51,8 @@ namespace Utils.ObjectModel
         {
             if (!TransactionInProgress)
                 return;
-            TransactionInProgress = false;
-            if (changes.Count == 0)
+            --transactionCount;
+            if (TransactionInProgress || changes.Count == 0)
                 return;
             // Note: apparently some built-in WPF code assumes that a CollectionChanged event will add/remove at most one item.
             // As such, if we add/remove more then one item, we should use NotifyCollectionChangedAction.Reset.
@@ -172,14 +178,24 @@ namespace Utils.ObjectModel
                 base.MoveItem(oldIndex, newIndex);
         }
 
-        public class Transaction : IDisposable
+        protected override void SetItem(int index, T item)
+        {
+            if (index < 0 || index >= Count)
+                throw new ArgumentOutOfRangeException("index");
+            changes.Add(new CollectionChange<T>(false, index, new List<T> { item }));
+            changes.Add(new CollectionChange<T>(true, index, new List<T> { item }));
+            using (BeginTransaction())
+                base.SetItem(index, item);
+        }
+
+        private class Transaction : IDisposable
         {
             private TransactableCollection<T> collection;
 
             internal Transaction(TransactableCollection<T> collection)
             {
                 this.collection = collection;
-                collection.TransactionInProgress = true;
+                ++collection.transactionCount;
             }
 
             public void Dispose()
@@ -187,7 +203,5 @@ namespace Utils.ObjectModel
                 collection.EndTransaction();
             }
         }
-
-        private List<CollectionChange<T>> changes = new List<CollectionChange<T>>();
     }
 }

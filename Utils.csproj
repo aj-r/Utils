@@ -49,7 +49,7 @@
     <Compile Include="DirectoryHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="HashCode.cs" />
-    <Compile Include="Linq\Enumerable.cs" />
+    <Compile Include="Linq\UtilsEnumerable.cs" />
     <Compile Include="Logging\EnvironmentFolderConverter.cs" />
     <Compile Include="ObjectModel\CollectionChange.cs" />
     <Compile Include="ObjectModel\DetailedCollectionChangedEventArgs.cs" />

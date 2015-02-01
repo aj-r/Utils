@@ -189,6 +189,22 @@ namespace Utils.Tests
         }
 
         [Test]
+        public void CollectionChangeSet()
+        {
+            int collectionChangedCount = 0;
+            int detailedCollectionChangedCount = 0;
+            var coll = new TransactableCollection<int>();
+            coll.Add(-4);
+
+            coll.CollectionChanged += (sender, e) => collectionChangedCount++;
+            coll.DetailedCollectionChanged += (sender, e) => detailedCollectionChangedCount++;
+
+            coll[0] = 567;
+            Assert.AreEqual(1, collectionChangedCount);
+            Assert.AreEqual(1, detailedCollectionChangedCount);
+        }
+
+        [Test]
         public void CollectionChangeRemove()
         {
             int collectionChangedCount = 0;
@@ -299,6 +315,117 @@ namespace Utils.Tests
             coll.RemoveRange(2, 0);
             Assert.AreEqual(0, collectionChangedCount);
             Assert.AreEqual(0, detailedCollectionChangedCount);
+        }
+
+        [Test]
+        public void CollectionChangeTransaction()
+        {
+            int collectionChangedCount = 0;
+            int detailedCollectionChangedCount = 0;
+            var coll = new TransactableCollection<int>();
+            coll.CollectionChanged += (sender, e) => collectionChangedCount++;
+            coll.DetailedCollectionChanged += (sender, e) => detailedCollectionChangedCount++;
+
+            Assert.IsFalse(coll.TransactionInProgress);
+            coll.Add(5);
+            coll.Add(6);
+            coll.Add(7);
+            coll.Add(8);
+            coll.Add(9);
+            coll.Add(10);
+            Assert.IsFalse(coll.TransactionInProgress);
+            Assert.AreEqual(6, collectionChangedCount);
+            Assert.AreEqual(6, detailedCollectionChangedCount);
+
+            collectionChangedCount = 0;
+            detailedCollectionChangedCount = 0;
+            using (coll.BeginTransaction())
+            {
+                Assert.IsTrue(coll.TransactionInProgress);
+                coll.Add(15);
+                coll.Add(16);
+                coll.Add(17);
+                coll.Add(18);
+                coll.Add(19);
+                coll.Add(20);
+                Assert.IsTrue(coll.TransactionInProgress);
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.IsFalse(coll.TransactionInProgress);
+            Assert.AreEqual(1, collectionChangedCount);
+            Assert.AreEqual(1, detailedCollectionChangedCount);
+
+            collectionChangedCount = 0;
+            detailedCollectionChangedCount = 0;
+            using (coll.BeginTransaction())
+            {
+                coll.Remove(7);
+                coll.Insert(6, -5);
+                coll.RemoveAt(0);
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.AreEqual(1, collectionChangedCount);
+            Assert.AreEqual(1, detailedCollectionChangedCount);
+
+            collectionChangedCount = 0;
+            detailedCollectionChangedCount = 0;
+            using (coll.BeginTransaction())
+            {
+                coll.RemoveRange(1, 6);
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.AreEqual(1, collectionChangedCount);
+            Assert.AreEqual(1, detailedCollectionChangedCount);
+
+            collectionChangedCount = 0;
+            detailedCollectionChangedCount = 0;
+            using (coll.BeginTransaction())
+            {
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.AreEqual(0, collectionChangedCount);
+            Assert.AreEqual(0, detailedCollectionChangedCount);
+
+            // If nothing changes during the transaction, 
+            collectionChangedCount = 0;
+            detailedCollectionChangedCount = 0;
+            using (coll.BeginTransaction())
+            {
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.AreEqual(0, collectionChangedCount);
+            Assert.AreEqual(0, detailedCollectionChangedCount);
+        }
+
+        [Test]
+        public void NestedTransactions()
+        {
+            int collectionChangedCount = 0;
+            int detailedCollectionChangedCount = 0;
+            var coll = new TransactableCollection<int>();
+            coll.CollectionChanged += (sender, e) => collectionChangedCount++;
+            coll.DetailedCollectionChanged += (sender, e) => detailedCollectionChangedCount++;
+
+            using (coll.BeginTransaction())
+            {
+                coll.Add(-200);
+                using (coll.BeginTransaction())
+                {
+                    coll.Add(-200);
+                }
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+                coll.Add(-200);
+                Assert.AreEqual(0, collectionChangedCount);
+                Assert.AreEqual(0, detailedCollectionChangedCount);
+            }
+            Assert.AreEqual(1, collectionChangedCount);
+            Assert.AreEqual(1, detailedCollectionChangedCount);
         }
     }
 }

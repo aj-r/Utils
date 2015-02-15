@@ -193,13 +193,22 @@ namespace Utils.Tests
         {
             int collectionChangedCount = 0;
             int detailedCollectionChangedCount = 0;
-            var coll = new TransactableCollection<int>();
-            coll.Add(-4);
+            var coll = new TransactableCollection<TestObject>();
+            coll.Add(new TestObject(-4));
 
             coll.CollectionChanged += (sender, e) => collectionChangedCount++;
-            coll.DetailedCollectionChanged += (sender, e) => detailedCollectionChangedCount++;
+            coll.DetailedCollectionChanged += (sender, e) =>
+            {
+                detailedCollectionChangedCount++;
+                var insertChange = e.Changes.FirstOrDefault(c => c.Inserted);
+                var removeChange = e.Changes.FirstOrDefault(c => c.Removed);
+                Assert.IsNotNull(insertChange, "Insert change not found.");
+                Assert.IsNotNull(removeChange, "Remove change not found.");
+                Assert.AreEqual(567, insertChange.Items.First().Value);
+                Assert.AreEqual(-4, removeChange.Items.First().Value);
+            };
 
-            coll[0] = 567;
+            coll[0] = new TestObject(567);
             Assert.AreEqual(1, collectionChangedCount);
             Assert.AreEqual(1, detailedCollectionChangedCount);
         }
@@ -426,6 +435,16 @@ namespace Utils.Tests
             }
             Assert.AreEqual(1, collectionChangedCount);
             Assert.AreEqual(1, detailedCollectionChangedCount);
+        }
+
+        private class TestObject
+        {
+            public TestObject(int value)
+            {
+                Value = value;
+            }
+
+            public int Value { get; set; }
         }
     }
 }

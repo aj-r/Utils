@@ -182,7 +182,8 @@ namespace Utils.ObjectModel
         {
             if (index < 0 || index >= Count)
                 throw new ArgumentOutOfRangeException("index");
-            changes.Add(new CollectionChange<T>(false, index, new List<T> { item }));
+            var oldItem = this[index];
+            changes.Add(new CollectionChange<T>(false, index, new List<T> { oldItem }));
             changes.Add(new CollectionChange<T>(true, index, new List<T> { item }));
             using (BeginTransaction())
                 base.SetItem(index, item);

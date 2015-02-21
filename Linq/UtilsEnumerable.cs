@@ -9,7 +9,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the number of elements in a sequence is equal to a certain value.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The expected number of elements.</param>
         /// <returns></returns>
@@ -29,7 +29,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the number of elements in a sequence is equal to a certain value.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The expected number of elements.</param>
         /// <returns></returns>
@@ -41,7 +41,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the sequence contains at least a certain number of elements.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The minimum number of elements.</param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the sequence contains at least a certain number of elements.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The minimum number of elements.</param>
         /// <returns></returns>
@@ -73,7 +73,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the sequence contains at most a certain number of elements.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The minimum number of elements.</param>
         /// <returns></returns>
@@ -93,7 +93,7 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the sequence contains at most a certain number of elements.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements to be counted.</param>
         /// <param name="count">The minimum number of elements.</param>
         /// <returns></returns>
@@ -105,9 +105,9 @@ namespace Utils.Linq
         /// <summary>
         /// Determines whether the sequence contains at most a certain number of elements.
         /// </summary>
-        /// <typeparam name="T">The type of elements or source.</typeparam>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements.</param>
-        /// <param name="startIndex">The index to start taking elements.</param>
+        /// <param name="startIndex">The index at which to start taking elements.</param>
         /// <param name="endIndex">The index to stop taking elements. The element at this index is not included.</param>
         /// <returns></returns>
         public static IEnumerable<T> Range<T>(this IEnumerable<T> source, int startIndex, int endIndex)

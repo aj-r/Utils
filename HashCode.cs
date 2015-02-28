@@ -15,12 +15,40 @@ namespace Utils
         /// <returns>The combined hash code.</returns>
         public static int FnvCombine(params int[] hashes)
         {
+            return FnvCombine((IEnumerable<int>)hashes);
+        }
+
+        /// <summary>
+        /// Combines hashes using the FNV algorithm.
+        /// </summary>
+        /// <param name="hashes">The hashes to combine.</param>
+        /// <returns>The combined hash code.</returns>
+        public static int FnvCombine(IEnumerable<int> hashes)
+        {
             unchecked // Overflow is ok
             {
                 uint h = 2166136261;
                 foreach (var hash in hashes)
                 {
                     h = (h * 16777619) ^ (uint)hash;
+                }
+                return (int)h;
+            }
+        }
+
+        /// <summary>
+        /// Gets a hash code for the specified byte array using the FNV algorithm.
+        /// </summary>
+        /// <param name="b">A byte array.</param>
+        /// <returns>The combined hash code.</returns>
+        public static int FnvCombine(byte[] bytes)
+        {
+            unchecked // Overflow is ok
+            {
+                uint h = 2166136261;
+                foreach (var b in bytes)
+                {
+                    h = (h * 16777619) ^ (uint)b;
                 }
                 return (int)h;
             }
@@ -46,24 +74,6 @@ namespace Utils
                     if (g != 0)
                         h ^= g >> 24;
                     h &= ~g;
-                }
-                return (int)h;
-            }
-        }
-
-        /// <summary>
-        /// Gets a hash code for the specified byte array using the FNV algorithm.
-        /// </summary>
-        /// <param name="b">A byte array.</param>
-        /// <returns>The combined hash code.</returns>
-        public static int FnvCombine(byte[] bytes)
-        {
-            unchecked // Overflow is ok
-            {
-                uint h = 2166136261;
-                foreach (var b in bytes)
-                {
-                    h = (h * 16777619) ^ (uint)b;
                 }
                 return (int)h;
             }

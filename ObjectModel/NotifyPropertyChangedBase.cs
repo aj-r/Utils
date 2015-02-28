@@ -87,7 +87,7 @@ namespace Utils.ObjectModel
         /// </summary>
         /// <param name="propertyExpression">A lambda expression in the form: () => SomeProperty</param>
         /// <returns>A string that represents the property name.</returns>
-        protected string GetPropertyName(Expression<Func<object>> propertyExpression)
+        protected static string GetPropertyName(Expression<Func<object>> propertyExpression)
         {
             MemberExpression expr;
             if (propertyExpression.Body is UnaryExpression)

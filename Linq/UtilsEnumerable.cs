@@ -103,13 +103,13 @@ namespace Utils.Linq
         }
 
         /// <summary>
-        /// Determines whether the sequence contains at most a certain number of elements.
+        /// Gets a range of items in an IEnumerable.
         /// </summary>
         /// <typeparam name="T">The type of the elements of source.</typeparam>
         /// <param name="source">A sequence that contains elements.</param>
         /// <param name="startIndex">The index at which to start taking elements.</param>
         /// <param name="endIndex">The index to stop taking elements. The element at this index is not included.</param>
-        /// <returns></returns>
+        /// <returns>A subset of source.</returns>
         public static IEnumerable<T> Range<T>(this IEnumerable<T> source, int startIndex, int endIndex)
         {
             return source.Skip(startIndex).Take(endIndex - startIndex);

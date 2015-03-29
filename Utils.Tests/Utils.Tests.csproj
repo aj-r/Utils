@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConvertBytesTests.cs" />
+    <Compile Include="EnumerableTests.cs" />
     <Compile Include="ObservableDictionaryTests.cs" />
     <Compile Include="ObservableKeyedCollectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

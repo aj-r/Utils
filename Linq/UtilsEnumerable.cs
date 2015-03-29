@@ -114,5 +114,203 @@ namespace Utils.Linq
         {
             return source.Skip(startIndex).Take(endIndex - startIndex);
         }
+
+        /// <summary>
+        /// Returns the first element in a sequence, or a default value if the sequence is empty.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="defaultValue">The value to return if the sequence is empty.</param>
+        /// <returns>The first item in source.</returns>
+        public static T FirstOr<T>(this IEnumerable<T> source, T defaultValue)
+        {
+            foreach (var item in source)
+                return item;
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Returns the first element of the sequence that satisfies a condition, or a default value if no value matches the condition.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="defaultValue">The value to return if the sequence is empty.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <returns>The first item in source.</returns>
+        public static T FirstOr<T>(this IEnumerable<T> source, T defaultValue, Func<T, bool> predicate)
+        {
+            foreach (var item in source)
+                if (predicate(item))
+                    return item;
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that equals the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, T value)
+        {
+            return IndexOf(source, value, 0);
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that matches the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <returns>The index of the first item in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+        {
+            return IndexOf(source, predicate, 0);
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that equals the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, T value, int startIndex)
+        {
+            return IndexOf(source, value, startIndex, -1);
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that matches the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <returns>The index of the first item in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, Func<T, bool> predicate, int startIndex)
+        {
+            return IndexOf(source, predicate, startIndex, -1);
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that equals the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <param name="count">The number of items to search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, T value, int startIndex, int count)
+        {
+            return IndexOf(source, t => EqualityComparer<T>.Default.Equals(t, value), startIndex, count);
+        }
+
+        /// <summary>
+        /// Gets the first index of the item in source that matches the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <param name="count">The number of items to search.</param>
+        /// <returns>The index of the first item in source that match the given criteria.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> source, Func<T, bool> predicate, int startIndex, int count)
+        {
+            return IndicesOf(source, predicate, startIndex, count).FirstOr(-1);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that are equal to the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, T value)
+        {
+            return IndicesOf(source, value, 0);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that match the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+        {
+            return IndicesOf(source, predicate, 0);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that are equal to the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, T value, int startIndex)
+        {
+            return IndicesOf(source, value, startIndex, -1);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that match the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, Func<T, bool> predicate, int startIndex)
+        {
+            return IndicesOf(source, predicate, startIndex, -1);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that are equal to the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="value">The value to look for.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <param name="count">The number of items to search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, T value, int startIndex, int count)
+        {
+            return IndicesOf(source, t => EqualityComparer<T>.Default.Equals(t, value), startIndex, count);
+        }
+
+        /// <summary>
+        /// Gets the indices of all items in source that match the given criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="startIndex">The index at which to start the search.</param>
+        /// <param name="count">The number of items to search.</param>
+        /// <returns>An enumerable contaning the indices of all items in source that match the given criteria.</returns>
+        public static IEnumerable<int> IndicesOf<T>(this IEnumerable<T> source, Func<T, bool> predicate, int startIndex, int count)
+        {
+            var itemsToSearch = source;
+            if (startIndex > 0)
+                itemsToSearch = itemsToSearch.Skip(startIndex);
+            if (count >= 0)
+                itemsToSearch = itemsToSearch.Take(count);
+
+            int index = startIndex;
+            foreach (var item in itemsToSearch)
+            {
+                if (predicate(item))
+                    yield return index;
+                ++index;
+            }
+        }
     }
 }

@@ -9,6 +9,16 @@ namespace Utils
     public static class HashCode
     {
         /// <summary>
+        /// Combines the hash codes of the objects using the FNV algorithm.
+        /// </summary>
+        /// <param name="hashes">The objects for which to combine the hash codes.</param>
+        /// <returns>The combined hash code.</returns>
+        public static int FnvCombine(params object[] objects)
+        {
+            return FnvCombine(objects.Select(o => o != null ? o.GetHashCode() : int.MinValue));
+        }
+
+        /// <summary>
         /// Combines hashes using the FNV algorithm.
         /// </summary>
         /// <param name="hashes">The hashes to combine.</param>
@@ -49,31 +59,6 @@ namespace Utils
                 foreach (var b in bytes)
                 {
                     h = (h * 16777619) ^ (uint)b;
-                }
-                return (int)h;
-            }
-        }
-
-        /// <summary>
-        /// Combines hashes using the ELF algorithm.
-        /// </summary>
-        /// <param name="hashes">The hashes to combine.</param>
-        /// <returns>The combined hash code.</returns>
-        /// <remarks>
-        /// NOTE: this implementation has not been tested.
-        /// </remarks>
-        public static int ElfCombine(params int[] hashes)
-        {
-            unchecked // Overflow is ok
-            {
-                uint h = 0, g;
-                foreach (var hash in hashes)
-                {
-                    h = (h << 4) + (uint)hash;
-                    g = h & (uint)0xf000000L;
-                    if (g != 0)
-                        h ^= g >> 24;
-                    h &= ~g;
                 }
                 return (int)h;
             }

@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Utils.ObjectModel
 {
     /// <summary>
     /// Represents a change to a collection.
     /// </summary>
-    public class CollectionChange<T>
+    /// <typeparam name="T">The type of elements in the collection.</typeparam>
+    public class CollectionChange<T> : ICollectionChange<T>
     {
 		/// <summary>
         /// Creates a new CollectionChange instance.

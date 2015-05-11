@@ -14,7 +14,7 @@ namespace Utils.ObjectModel
     public class TransactableCollection<T> : ObservableCollection<T>
     {
         private int transactionCount = 0;
-        private List<CollectionChange<T>> changes = new List<CollectionChange<T>>();
+        private List<ICollectionChange<T>> changes = new List<ICollectionChange<T>>();
 
         public TransactableCollection() { }
         public TransactableCollection(IEnumerable<T> collection) : base(collection) { }
@@ -91,7 +91,9 @@ namespace Utils.ObjectModel
         {
             if (index > Count || index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            var collection = items as IReadOnlyCollection<T> ?? new ReadOnlyCollection<T>(new List<T>(items));
+            if (items == null)
+                throw new ArgumentNullException("items");
+            var collection = items as IReadOnlyCollection<T> ?? new ReadOnlyCollection<T>(items as IList<T> ?? items.ToList());
             if (collection.Count == 0)
                 return;
             changes.Add(new CollectionChange<T>(true, index, collection));
@@ -120,7 +122,7 @@ namespace Utils.ObjectModel
                 throw new ArgumentOutOfRangeException("count");
             if (index + count > Count)
                 throw new ArgumentException("index and count do not denote a valid range of elements in the collection.");
-            var collection = new ReadOnlyCollection<T>(new List<T>(this.Skip(index).Take(count)));
+            var collection = new ReadOnlyCollection<T>(this.Skip(index).Take(count).ToList());
             changes.Add(new CollectionChange<T>(false, index, collection));
             using (BeginTransaction())
             {

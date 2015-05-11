@@ -53,6 +53,7 @@
     <Compile Include="Logging\EnvironmentFolderConverter.cs" />
     <Compile Include="ObjectModel\CollectionChange.cs" />
     <Compile Include="ObjectModel\DetailedCollectionChangedEventArgs.cs" />
+    <Compile Include="ObjectModel\ICollectionChange.cs" />
     <Compile Include="ObjectModel\LinkedListExtensions.cs" />
     <Compile Include="ObjectModel\TransactableCollection.cs" />
     <Compile Include="ObjectModel\TreeNode.cs" />

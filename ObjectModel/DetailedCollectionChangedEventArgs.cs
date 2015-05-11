@@ -10,11 +10,11 @@ namespace Utils.ObjectModel
 
     public class DetailedCollectionChangedEventArgs<T> : EventArgs
     {
-        public DetailedCollectionChangedEventArgs(IReadOnlyCollection<CollectionChange<T>> changes)
+        public DetailedCollectionChangedEventArgs(IReadOnlyCollection<ICollectionChange<T>> changes)
         {
             Changes = changes;
         }
 
-        public IReadOnlyCollection<CollectionChange<T>> Changes { get; private set; }
+        public IReadOnlyCollection<ICollectionChange<T>> Changes { get; private set; }
     }
 }

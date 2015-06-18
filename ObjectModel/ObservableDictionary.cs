@@ -349,7 +349,7 @@ namespace Utils.ObjectModel
         /// <summary>
         /// Raises the CollectionChanged event.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Arguments for the event.</param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (e.Action != NotifyCollectionChangedAction.Replace)

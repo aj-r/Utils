@@ -13,7 +13,9 @@ namespace Utils.Transactions
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class TransactableCollection<T> : ObservableCollection<T>, ITransactable
     {
-        private List<ICollectionChange<T>> changes = new List<ICollectionChange<T>>();
+        private readonly List<ICollectionChange<T>> changes = new List<ICollectionChange<T>>();
+
+        private int transactionLevel;
 
         /// <summary>
         /// Creates a new <see cref="TransactableCollection{T}"/> instance.
@@ -37,8 +39,6 @@ namespace Utils.Transactions
         /// </summary>
         public event DetailedCollectionChangedEventHandler<T> DetailedCollectionChanged;
 
-        private int transactionLevel;
-
         /// <summary>
         /// Begins a transaction. CollectionChanged events will be suppressed until the transaction is complete.
         /// </summary>
@@ -51,7 +51,7 @@ namespace Utils.Transactions
         /// Nested/concurrent transactions are allowed. If you use nested/concurrent transactions, the CollectionChanged event will not be raised until
         /// all transactions are complete.
         /// </remarks>
-        public IDisposable BeginTransaction()
+        public virtual IDisposable BeginTransaction()
         {
             return ((ITransactable)this).BeginTransaction();
         }

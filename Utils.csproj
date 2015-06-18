@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Utils.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\Utils.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -51,11 +53,11 @@
     <Compile Include="HashCode.cs" />
     <Compile Include="Linq\UtilsEnumerable.cs" />
     <Compile Include="Logging\EnvironmentFolderConverter.cs" />
-    <Compile Include="ObjectModel\CollectionChange.cs" />
-    <Compile Include="ObjectModel\DetailedCollectionChangedEventArgs.cs" />
-    <Compile Include="ObjectModel\ICollectionChange.cs" />
+    <Compile Include="Transactions\CollectionChange.cs" />
+    <Compile Include="Transactions\DetailedCollectionChangedEventArgs.cs" />
+    <Compile Include="Transactions\ICollectionChange.cs" />
     <Compile Include="ObjectModel\LinkedListExtensions.cs" />
-    <Compile Include="ObjectModel\TransactableCollection.cs" />
+    <Compile Include="Transactions\TransactableCollection.cs" />
     <Compile Include="ObjectModel\TreeNode.cs" />
     <Compile Include="ObjectModel\NotifyPropertyChangedBase.cs" />
     <Compile Include="ObjectModel\ObservableDictionary.cs" />
@@ -63,6 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\ProcessExtensions.cs" />
     <Compile Include="Tasks\TaskExtensions.cs" />
+    <Compile Include="Transactions\ITransactable.cs" />
+    <Compile Include="Transactions\Transaction.cs" />
+    <Compile Include="Transactions\TransactionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Utils.ObjectModel
+namespace Utils.Transactions
 {
     /// <summary>
     /// Represents a change to a collection.

@@ -39,7 +39,7 @@ namespace Utils
         /// <summary>
         /// Creates a string that represents the byte array in hexadecimal format.
         /// </summary>
-        /// <param name="s">A string in hexadecimal format.</param>
+        /// <param name="bytes">The byte array to convert to a string.</param>
         /// <returns>A string in hexadecimal format.</returns>
         /// <exception cref="ArgumentNullException" />
         public static string ToHexString(byte[] bytes)

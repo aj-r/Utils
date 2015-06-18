@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
+    /// <summary>
+    /// Contains methods for managing directories.
+    /// </summary>
     public static class DirectoryHelper
     {
         /// <summary>

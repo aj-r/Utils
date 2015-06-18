@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Utils.Linq
 {
+    /// <summary>
+    /// Contains methods for querying objects that implements IEnumerable.
+    /// </summary>
     public static class UtilsEnumerable
     {
         /// <summary>

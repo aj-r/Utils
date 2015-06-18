@@ -5,27 +5,39 @@ using System.Collections.Specialized;
 using System.Linq;
 using Utils.Linq;
 
-namespace Utils.ObjectModel
+namespace Utils.Transactions
 {
     /// <summary>
     /// An ObservableCollection that supports deferring the CollectionChanged notification until a set of multiple changes is complete.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class TransactableCollection<T> : ObservableCollection<T>
+    public class TransactableCollection<T> : ObservableCollection<T>, ITransactable
     {
-        private int transactionCount = 0;
         private List<ICollectionChange<T>> changes = new List<ICollectionChange<T>>();
 
+        /// <summary>
+        /// Creates a new <see cref="TransactableCollection{T}"/> instance.
+        /// </summary>
         public TransactableCollection() { }
-        public TransactableCollection(IEnumerable<T> collection) : base(collection) { }
-        public TransactableCollection(List<T> list) : base(list) { }
-
-        public event DetailedCollectionChangedEventHandler<T> DetailedCollectionChanged;
 
         /// <summary>
-        /// Gets whether a transaction is currently in progress.
+        /// Creates a new <see cref="TransactableCollection{T}"/> instance.
         /// </summary>
-        public bool TransactionInProgress { get { return transactionCount > 0; } }
+        /// <param name="collection">The collection from which elements are copied.</param>
+        public TransactableCollection(IEnumerable<T> collection) : base(collection) { }
+
+        /// <summary>
+        /// Creates a new <see cref="TransactableCollection{T}"/> instance.
+        /// </summary>
+        /// <param name="list">The list from which elements are copied.</param>
+        public TransactableCollection(List<T> list) : base(list) { }
+
+        /// <summary>
+        /// Occurs immediately after the CollectionChanged event(s). Contains details of every change that occured.
+        /// </summary>
+        public event DetailedCollectionChangedEventHandler<T> DetailedCollectionChanged;
+
+        private int transactionLevel;
 
         /// <summary>
         /// Begins a transaction. CollectionChanged events will be suppressed until the transaction is complete.
@@ -36,22 +48,24 @@ namespace Utils.ObjectModel
         /// If you call the method in this way, then you should never call EndTransaction(); it will be called automatically when the
         /// transaction is disposed.
         /// 
-        /// Nested transactions are allowed. If you use nested transactions, the CollectionChanged event will not be raised until the
-        /// outermost transaction completes.
+        /// Nested/concurrent transactions are allowed. If you use nested/concurrent transactions, the CollectionChanged event will not be raised until
+        /// all transactions are complete.
         /// </remarks>
         public IDisposable BeginTransaction()
         {
-            return new Transaction(this);
+            return ((ITransactable)this).BeginTransaction();
         }
 
-        /// <summary>
-        /// Ends a transaction. If the collection was modified while the transaction was active, then a CollectionChanged event will be fired.
-        /// </summary>
-        public void EndTransaction()
+        void ITransactable.IncreaseTransactionLevel()
+        {
+            ++transactionLevel;
+        }
+
+        void ITransactable.DecreaseTransactionLevel()
         {
             if (!TransactionInProgress)
                 return;
-            --transactionCount;
+            --transactionLevel;
             if (TransactionInProgress || changes.Count == 0)
                 return;
             // Note: apparently some built-in WPF code assumes that a CollectionChanged event will add/remove at most one item.
@@ -71,6 +85,15 @@ namespace Utils.ObjectModel
             if (e == null)
                 e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
             OnCollectionChanged(e);
+        }
+
+        /// <summary>
+        /// Gets whether a transaction is currently in progress for the current collection.
+        /// </summary>
+        /// <returns><value>true</value> if a transaction is in progress; otherwise <value>false</value>.</returns>
+        public bool TransactionInProgress
+        {
+            get { return transactionLevel > 0; }
         }
 
         /// <summary>
@@ -133,6 +156,10 @@ namespace Utils.ObjectModel
             }
         }
 
+        /// <summary>
+        /// Raises the CollectionChanged event with the provided arguments.
+        /// </summary>
+        /// <param name="e">Arguments of the event being raised.</param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (!TransactionInProgress)
@@ -147,24 +174,42 @@ namespace Utils.ObjectModel
             }
         }
 
+        /// <summary>
+        /// Raises the DetailedCollectionChanged event with the provided arguments.
+        /// </summary>
+        /// <param name="e">Arguments of the event being raised.</param>
         protected virtual void OnDetailedCollectionChanged(DetailedCollectionChangedEventArgs<T> e)
         {
             if (DetailedCollectionChanged != null)
                 DetailedCollectionChanged(this, e);
         }
 
+        /// <summary>
+        /// Inserts an item into the collection at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the item should be inserted.</param>
+        /// <param name="item">The item to insert.</param>
         protected override void InsertItem(int index, T item)
         {
             changes.Add(new CollectionChange<T>(true, index, new List<T> { item }));
             base.InsertItem(index, item);
         }
 
+        /// <summary>
+        /// Removes an item from the specified index of the collection.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index)
         {
             changes.Add(new CollectionChange<T>(false, index, new List<T> { this[index] }));
             base.RemoveItem(index);
         }
 
+        /// <summary>
+        /// Moves an item from one index to another.
+        /// </summary>
+        /// <param name="oldIndex">The zero-based index of the item to move.</param>
+        /// <param name="newIndex">The zero-based index specifying the new location of the item.</param>
         protected override void MoveItem(int oldIndex, int newIndex)
         {
             if (oldIndex < 0 || oldIndex >= Count)
@@ -180,6 +225,11 @@ namespace Utils.ObjectModel
                 base.MoveItem(oldIndex, newIndex);
         }
 
+        /// <summary>
+        /// Sets the item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element.</param>
+        /// <param name="item">The new value for the element.</param>
         protected override void SetItem(int index, T item)
         {
             if (index < 0 || index >= Count)
@@ -189,22 +239,6 @@ namespace Utils.ObjectModel
             changes.Add(new CollectionChange<T>(true, index, new List<T> { item }));
             using (BeginTransaction())
                 base.SetItem(index, item);
-        }
-
-        private class Transaction : IDisposable
-        {
-            private TransactableCollection<T> collection;
-
-            internal Transaction(TransactableCollection<T> collection)
-            {
-                this.collection = collection;
-                ++collection.transactionCount;
-            }
-
-            public void Dispose()
-            {
-                collection.EndTransaction();
-            }
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Utils.Tasks
 {
+    /// <summary>
+    /// Contains extension methods for managing processes.
+    /// </summary>
     public static class ProcessExtensions
     {
         /// <summary>

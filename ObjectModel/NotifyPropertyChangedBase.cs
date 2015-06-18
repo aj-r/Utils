@@ -6,10 +6,16 @@ using System.Runtime.CompilerServices;
 
 namespace Utils.ObjectModel
 {
+    /// <summary>
+    /// A class that provides a basic implementation of INotifyPropertyChanged.
+    /// </summary>
     public class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged Members
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -99,6 +105,10 @@ namespace Utils.ObjectModel
             return expr.Member.Name;
         }
 
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="e">Arguments for the event.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null)

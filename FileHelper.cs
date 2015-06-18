@@ -4,6 +4,9 @@ using System.Threading;
 
 namespace Utils
 {
+    /// <summary>
+    /// Contains methods for managing files.
+    /// </summary>
     public static class FileHelper
     {
         private const int pollInterval = 500;
@@ -67,8 +70,8 @@ namespace Utils
         /// <summary>
         /// Creates or overwrites a file in the specified path. If the file is currently locked, this method will block the current thread until the file is available.
         /// </summary>
-        /// <param name="path">The path and name of the file to create.</param>
-        /// <returns>An unshared FileStream object on the specified path with write access.</returns>
+        /// <param name="getFileFunc">A delegate method that attempts to get the file stream. If this method fails with an IOException, it will be executed again until it succeeds.</param>
+        /// <returns>The stream returned from the function.</returns>
         private static FileStream GetFileWhenAvailable(Func<FileStream> getFileFunc)
         {
             while (true)

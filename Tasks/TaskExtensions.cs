@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Utils.Tasks
 {
+    /// <summary>
+    /// Contains Task extension methods.
+    /// </summary>
     public static class TaskExtensions
     {
         /// <summary>
@@ -14,7 +17,6 @@ namespace Utils.Tasks
         /// </summary>
         /// <param name="task">The task to await.</param>
         /// <param name="millisecondsDelay">The maximum number of millisends to wait for.</param>
-        /// <param name="cts">A <see cref="System.Threading.CancellationTokenSource"/> that can be used to cancel the task.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
         public static async Task WithTimeout(this Task task, int millisecondsDelay)
         {
@@ -30,7 +32,6 @@ namespace Utils.Tasks
         /// <typeparam name="T">The type of te result produced by the task.</typeparam>
         /// <param name="task">The task to await.</param>
         /// <param name="millisecondsDelay">The maximum number of millisends to wait for.</param>
-        /// <param name="cts">A <see cref="System.Threading.CancellationTokenSource"/> that can be used to cancel the task.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
         public static async Task<T> WithTimeout<T>(this Task<T> task, int millisecondsDelay)
         {

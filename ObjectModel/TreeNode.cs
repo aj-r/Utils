@@ -9,9 +9,16 @@ namespace Utils.ObjectModel
     /// <typeparam name="T">The type of elements in the graph.</typeparam>
     public class TreeNode<T>
     {
+        /// <summary>
+        /// Creates a new <see cref="TreeNode{T}"/> instance.
+        /// </summary>
         public TreeNode()
         { }
 
+        /// <summary>
+        /// Creates a new <see cref="TreeNode{T}"/> instance.
+        /// </summary>
+        /// <param name="data">The value to store in the node.</param>
         public TreeNode(T data)
         {
             Value = data;
@@ -31,7 +38,7 @@ namespace Utils.ObjectModel
         /// <summary>
         /// Gets the flattened tree in depth-first order.
         /// </summary>
-        /// <returns>The list of the values of all tree notes starting with the current node.</returns>
+        /// <returns>The list of the values of all tree notes, starting with the current node's value.</returns>
         public IEnumerable<T> Flatten()
         {
             yield return Value;

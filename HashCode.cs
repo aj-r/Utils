@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
+    /// <summary>
+    /// Contains methods for combining hash codes.
+    /// </summary>
     public static class HashCode
     {
         /// <summary>
         /// Combines the hash codes of the objects using the FNV algorithm.
         /// </summary>
-        /// <param name="hashes">The objects for which to combine the hash codes.</param>
+        /// <param name="objects">The objects for which to combine the hash codes.</param>
         /// <returns>The combined hash code.</returns>
         public static int FnvCombine(params object[] objects)
         {
@@ -49,7 +52,7 @@ namespace Utils
         /// <summary>
         /// Gets a hash code for the specified byte array using the FNV algorithm.
         /// </summary>
-        /// <param name="b">A byte array.</param>
+        /// <param name="bytes">A byte array.</param>
         /// <returns>The combined hash code.</returns>
         public static int FnvCombine(byte[] bytes)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Utils.ObjectModel;
+using Utils.Transactions;
 
 namespace Utils.Tests
 {
@@ -427,6 +427,7 @@ namespace Utils.Tests
                 {
                     coll.Add(-200);
                 }
+                Assert.That(coll.TransactionInProgress);
                 Assert.AreEqual(0, collectionChangedCount);
                 Assert.AreEqual(0, detailedCollectionChangedCount);
                 coll.Add(-200);
@@ -435,6 +436,7 @@ namespace Utils.Tests
             }
             Assert.AreEqual(1, collectionChangedCount);
             Assert.AreEqual(1, detailedCollectionChangedCount);
+            Assert.That(coll.TransactionInProgress, Is.False);
         }
 
         private class TestObject

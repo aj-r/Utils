@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Utils.Transactions;
 
 namespace Utils.Linq
 {
@@ -314,6 +315,24 @@ namespace Utils.Linq
                     yield return index;
                 ++index;
             }
+        }
+
+        /// <summary>
+        /// Adds multiple items to the end of a collection.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">A sequence that contains elements.</param>
+        public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+            if (source is List<T>)
+                ((List<T>)source).AddRange(items);
+            else if (source is TransactableCollection<T>)
+                ((TransactableCollection<T>)source).AddRange(items);
+            else
+                foreach (var item in items)
+                    source.Add(item);
         }
     }
 }

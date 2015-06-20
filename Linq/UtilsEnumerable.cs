@@ -322,6 +322,7 @@ namespace Utils.Linq
         /// </summary>
         /// <typeparam name="T">The type of the elements of <paramref name="source"/>.</typeparam>
         /// <param name="source">A sequence that contains elements.</param>
+        /// <param name="items">The items to add.</param>
         public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
         {
             if (source == null)

@@ -63,5 +63,13 @@ namespace Utils.Tasks
         {
             return task.ContinueWith(t => t.GetAwaiter().GetResult(), token);
         }
+
+        /// <summary>
+        /// Executes a task and ignores the result.
+        /// </summary>
+        /// <param name="task">The task to execute.</param>
+        public static void IgnoreResult(this Task task)
+        {
+        }
     }
 }

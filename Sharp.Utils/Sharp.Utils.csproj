@@ -7,8 +7,8 @@
     <ProjectGuid>{6DCB1FE6-C826-4112-94CF-B6ECE5FD8071}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpUtils</RootNamespace>
-    <AssemblyName>SharpUtils</AssemblyName>
+    <RootNamespace>Sharp.Utils</RootNamespace>
+    <AssemblyName>Sharp.Utils</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\SharpUtils.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Sharp.Utils.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,12 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\SharpUtils.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Sharp.Utils.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,7 +49,6 @@
     <Compile Include="FileHelper.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Linq\UtilsEnumerable.cs" />
-    <Compile Include="Logging\EnvironmentFolderConverter.cs" />
     <Compile Include="Transactions\CollectionChange.cs" />
     <Compile Include="Transactions\DetailedCollectionChangedEventArgs.cs" />
     <Compile Include="Transactions\ICollectionChange.cs" />
@@ -68,9 +64,6 @@
     <Compile Include="Transactions\ITransactable.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Transactions\TransactionExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

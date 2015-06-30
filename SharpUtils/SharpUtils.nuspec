@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/aj-r/Utils/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/aj-r/Utils</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2015 AJ Richardson</copyright>
+    <tags>utilities</tags>
+  </metadata>
+</package>

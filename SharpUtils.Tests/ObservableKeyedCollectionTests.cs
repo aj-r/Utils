@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Utils.ObjectModel;
+using SharpUtils.ObjectModel;
 
-namespace Utils.Tests
+namespace SharpUtils.Tests
 {
     [TestFixture]
     public class ObservableKeyedCollectionTests

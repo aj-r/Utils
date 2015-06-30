@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Utils.Transactions;
+using SharpUtils.Transactions;
 
-namespace Utils.Tests
+namespace SharpUtils.Tests
 {
     [TestFixture]
     public class TransactableCollectionTests

@@ -6,8 +6,8 @@
     <ProjectGuid>{03534F21-39D9-44FF-8BB2-19D25FAC102D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Utils.Tests</RootNamespace>
-    <AssemblyName>Utils.Tests</AssemblyName>
+    <RootNamespace>SharpUtils.Tests</RootNamespace>
+    <AssemblyName>SharpUtils.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utils.csproj">
+    <ProjectReference Include="..\SharpUtils\SharpUtils.csproj">
       <Project>{6dcb1fe6-c826-4112-94cf-b6ece5fd8071}</Project>
-      <Name>Utils</Name>
+      <Name>SharpUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -2,7 +2,7 @@
 using System.Text;
 using NUnit.Framework;
 
-namespace Utils.Tests
+namespace SharpUtils.Tests
 {
     [TestFixture]
     public class ConvertBytesTests

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils.csproj", "{6DCB1FE6-C826-4112-94CF-B6ECE5FD8071}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpUtils", "SharpUtils\SharpUtils.csproj", "{6DCB1FE6-C826-4112-94CF-B6ECE5FD8071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Tests", "Utils.Tests\Utils.Tests.csproj", "{03534F21-39D9-44FF-8BB2-19D25FAC102D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpUtils.Tests", "SharpUtils.Tests\SharpUtils.Tests.csproj", "{03534F21-39D9-44FF-8BB2-19D25FAC102D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

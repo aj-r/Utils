@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
-using Utils.Linq;
+using SharpUtils.Linq;
 
-namespace Utils.Tests
+namespace SharpUtils.Tests
 {
     [TestFixture]
     public class EnumerableTests

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 
-namespace Utils.ObjectModel
+namespace SharpUtils.ObjectModel
 {
     /// <summary>
     /// A dictionary that fires events when items are added, removed, or modified.

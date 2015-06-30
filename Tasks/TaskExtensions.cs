@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Utils.Tasks
+namespace SharpUtils.Tasks
 {
     /// <summary>
     /// Contains Task extension methods.

@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Utils.ObjectModel
+namespace SharpUtils.ObjectModel
 {
     /// <summary>
     /// A KeyedCollection that fires events when items are added, removed, or modified.

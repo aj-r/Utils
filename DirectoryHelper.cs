@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utils
+namespace SharpUtils
 {
     /// <summary>
     /// Contains methods for managing directories.

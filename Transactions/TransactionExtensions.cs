@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utils.Transactions
+namespace SharpUtils.Transactions
 {
     /// <summary>
     /// Contains extension methods for the <see cref="ITransactable"/> interface.

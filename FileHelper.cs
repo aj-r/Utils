@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 
-namespace Utils
+namespace SharpUtils
 {
     /// <summary>
     /// Contains methods for managing files.

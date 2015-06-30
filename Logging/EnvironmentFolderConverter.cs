@@ -2,7 +2,7 @@
 using System.IO;
 using log4net.Util;
 
-namespace Utils.Logging
+namespace SharpUtils.Logging
 {
     /// <summary>
     /// A log4net PatternConverter that gets the path to a special folder, given the special folder name.

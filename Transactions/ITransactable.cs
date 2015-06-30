@@ -1,4 +1,4 @@
-﻿namespace Utils.Transactions
+﻿namespace SharpUtils.Transactions
 {
     /// <summary>
     /// Supports nested transactions. 

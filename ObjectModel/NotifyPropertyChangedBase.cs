@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace Utils.ObjectModel
+namespace SharpUtils.ObjectModel
 {
     /// <summary>
     /// A class that provides a basic implementation of INotifyPropertyChanged.

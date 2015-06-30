@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Utils.Tasks
+namespace SharpUtils.Tasks
 {
     /// <summary>
     /// Contains extension methods for managing processes.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Utils.Transactions
+namespace SharpUtils.Transactions
 {
     /// <summary>
     /// Represents a method that will handle a DetailedCollectionChanged event.

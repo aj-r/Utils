@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utils
+namespace SharpUtils
 {
     /// <summary>
     /// Contains helper methods for byte array conversions.

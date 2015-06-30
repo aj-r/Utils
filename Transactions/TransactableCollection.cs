@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using Utils.Linq;
+using SharpUtils.Linq;
 
-namespace Utils.Transactions
+namespace SharpUtils.Transactions
 {
     /// <summary>
     /// An ObservableCollection that supports deferring the CollectionChanged notification until a set of multiple changes is complete.

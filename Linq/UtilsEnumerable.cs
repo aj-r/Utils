@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Utils.Transactions;
+using SharpUtils.Transactions;
 
-namespace Utils.Linq
+namespace SharpUtils.Linq
 {
     /// <summary>
     /// Contains methods for querying objects that implements IEnumerable.

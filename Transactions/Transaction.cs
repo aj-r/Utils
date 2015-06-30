@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utils.Transactions
+namespace SharpUtils.Transactions
 {
     /// <summary>
     /// Provides a convenient way of scoping transactions with a using block.

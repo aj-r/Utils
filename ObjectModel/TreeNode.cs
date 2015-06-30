@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Utils.ObjectModel
+namespace SharpUtils.ObjectModel
 {
     /// <summary>
     /// A tree node.

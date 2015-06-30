@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utils.ObjectModel
+namespace SharpUtils.ObjectModel
 {
     /// <summary>
     /// Contains methods for querying LinkedList objects.
